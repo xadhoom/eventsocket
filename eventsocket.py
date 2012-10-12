@@ -18,7 +18,7 @@
 
 import types
 import string
-import re, urllib
+import urllib
 from cStringIO import StringIO
 from twisted.python import log
 from twisted.protocols import basic
@@ -53,7 +53,6 @@ class EventSocket(basic.LineReceiver):
         self.__ctx = None
         self.__rawlen = None
         self.__io = StringIO()
-        self.__crlf = re.compile(r"[\r\n]+")
         self.__rawresponse = [
             "api/response",
             "text/disconnect-notice",
@@ -86,7 +85,8 @@ class EventSocket(basic.LineReceiver):
 
     def processLine(self, ev, line):
         try:
-            k, v = self.__crlf.sub("", line).split(":", 1)
+            __line = line.replace('\n','').replace('\r','')
+            k, v = __line.split(":", 1)
             k = k.replace("-", "_").strip()
             v = urllib.unquote(v.strip())
             ev[k] = v
