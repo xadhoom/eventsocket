@@ -18,8 +18,8 @@
 
 import types
 import string
-import urllib
 from cStringIO import StringIO
+import _eventsocket_accell
 from twisted.python import log
 from twisted.protocols import basic
 from twisted.internet import defer, reactor, protocol
@@ -85,11 +85,7 @@ class EventSocket(basic.LineReceiver):
 
     def processLine(self, ev, line):
         try:
-            __line = line.replace('\n','').replace('\r','')
-            k, v = __line.split(":", 1)
-            k = k.replace("-", "_").strip()
-            v = urllib.unquote(v.strip())
-            ev[k] = v
+            _eventsocket_accell.processLine(ev, line)
         except:
             pass
 
