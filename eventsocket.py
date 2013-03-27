@@ -245,10 +245,11 @@ class EventProtocol(EventSocket):
         parsed_args = [name]
         for k,v in args.iteritems():
             parsed_args.append('%s: %s' % (k, v))
-        parsed_args.append('')
         if body:
+            parsed_args.append('content-length: %s' % len(body))
+            parsed_args.append('')
             parsed_args.append(body)
-        return self.__protocolSendRaw("sendevent", '\n'.join(parsed_args))
+        return self.__protocolSend("sendevent", '\n'.join(parsed_args))
 
     def bgapi(self, args):
         "Please refer to http://wiki.freeswitch.org/wiki/Event_Socket#bgapi"
