@@ -39,8 +39,7 @@ class MyProtocol(eventsocket.EventProtocol):
                 'profile': 'internal',
                 'content-type': 'application/simple-message-summary',
                 'to-uri': 'sip:%s@208.65.240.45' % ext,
-                'from-uri': 'sip:ss@208.65.240.45',
-                'content-length': len(body)
+                'from-uri': 'sip:ss@208.65.240.45'
                 }
         d = self.sendevent("NOTIFY", params, body)
         d.addCallback(_success)
