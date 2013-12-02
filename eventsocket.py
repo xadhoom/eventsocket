@@ -85,7 +85,8 @@ class EventSocket(basic.LineReceiver):
 
     def processLine(self, ev, line):
         try:
-            _eventsocket_accell.processLine(ev, line)
+            k, v = _eventsocket_accell.processLine(line)
+            ev[k] =  v
         except:
             pass
 
